@@ -1,0 +1,57 @@
+b_y = int(input('Enter your birth year: '))
+b_m = int(input('Enter your birth month: '))
+b_d = int(input('Enter your birth date: '))
+
+c_y = int(input('Enter current year: '))
+c_m = int(input('Enter current month: '))
+c_d = int(input('Enter current date: '))
+
+# Validate date & month
+if b_m in [1, 3, 5, 7, 8, 10, 12]:
+    if 1 <= b_d <= 31:
+        print('Valid date!')
+elif b_m in [4, 6, 9, 11]:
+    if 1 <= b_d <= 30:
+        print('Valid date!')
+elif b_m == 2:  # Not considering leap year for now
+    if 1 <= b_d <= 28:
+        print('Valid date!')
+else:
+    print('Invalid month or date')
+
+# 1. Calculating Year
+year = c_y - b_y
+if c_m < b_m or (c_m == b_m and c_d < b_d):
+    year -= 1
+
+# 2. Calculating Month
+if c_m > b_m:
+    month = c_m - b_m
+    if c_d < b_d:
+        month -= 1
+elif c_m < b_m:
+    month = (12 + c_m) - b_m
+    if c_d < b_d:
+        month -= 1
+else:  # c_m == b_m
+    if c_d < b_d:
+        month = 11
+    else:
+        month = 0
+
+# 3. Calculating Days
+p_m = (c_m - 2) % 12 + 1
+if p_m in [1, 3, 5, 7, 8, 10, 12]:
+    days_in_previous_month = 31
+elif p_m in [4, 6, 9, 11]:
+    days_in_previous_month = 30
+elif p_m == 2:
+    days_in_previous_month = 28
+
+if c_d >= b_d:
+    day = c_d - b_d
+else:
+    day = (days_in_previous_month + c_d) - b_d
+
+print('-------------------------')
+print(f'Your exact age is: {year} Years, {month} Months, and {day} Days')
